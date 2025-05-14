@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pepsu Kart</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+        :root {
+            --primary-color: #25D366;
+            --primary-color-dark: #1ebe57;
+            --background-gradient-start: #f5f7fa;
+            --background-gradient-end: #c3cfe2;
+            --text-color: #222;
+            --text-muted: #666;
+            --shadow-light: rgba(0,0,0,0.1);
+            --shadow-dark: rgba(0,0,0,0.2);
+            --font-family: 'Montserrat', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end));
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-color);
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: var(--primary-color-dark);
+        }
+
+        header {
+            width: 100%;
+            background: white;
+            box-shadow: 0 2px 8px var(--shadow-light);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li a {
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        #hero {
+            width: 100%;
+            background: url('https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1350&q=80') center center/cover no-repeat;
+            color: white;
+            padding: 120px 20px 80px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        #hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 0;
+        }
+
+        #hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin: 0 0 20px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }
+
+        #hero p {
+            font-size: 1.3rem;
+            margin: 0 0 30px;
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.5);
+            transition: background-color 0.4s ease, transform 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-color-dark);
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(30, 190, 87, 0.7);
+        }
+
+        main.container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px 20px;
+        }
+
+        #products h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--text-color);
+        }
+
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px var(--shadow-light);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px var(--shadow-dark);
+        }
+
+        .product img {
+            max-width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+            margin-bottom: 15px;
+        }
+
+        .product:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-name {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 10px;
+            min-height: 48px;
+        }
+
+        .product-price {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .product-rating {
+            margin-bottom: 15px;
+        }
+
+        .star {
+            color: #f5a623;
+            font-size: 1.1em;
+            margin-right: 2px;
+        }
+
+        .buy-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.4s ease, transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+            outline: none;
+            align-self: center;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .buy-button:hover {
+            background-color: var(--primary-color-dark);
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(30, 190, 87, 0.6);
+        }
+
+        #contact {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px var(--shadow-light);
+            padding: 30px 20px;
+            margin: 60px auto 40px;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        #contact h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        #contact p {
+            font-size: 1.1rem;
+            margin: 10px 0;
+            color: var(--text-muted);
+        }
+
+        #contact a {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        footer {
+            width: 100%;
+            background: #222;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .social-links a {
+            color: white;
+            margin: 0 8px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header .header-container {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+                padding-left: 15px;
+            }
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            .product-list {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            }
+            #hero h1 {
+                font-size: 2.5rem;
+            }
+            #hero p {
+                font-size: 1rem;
+                max-width: 90%;
+            }
+            .btn-primary {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">Pepsu Kart</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#hero" class="active">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero">
+        <h1>Pepsu Bhai Dil Mai Basse</h1>
+        <p>Discover exclusive products and buy your favorites easily!</p>
+        <button class="btn-primary" onclick="scrollToSection('products')">Shop Now</button>
+    </section>
+
+    <main class="container">
+        <section id="products">
+            <h2>Our Products</h2>
+            <div class="product-list" id="productList">
+                <!-- Products will be inserted here by JavaScript -->
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>Have questions? Reach out to us on WhatsApp or email!</p>
+            <p>Email: support@merchandisestore.com</p>
+            <p>WhatsApp: <a href="https://chat.whatsapp.com/YourGroupInviteLink" target="_blank" rel="noopener noreferrer">Join our WhatsApp Group</a></p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2024 Pepsu Kart. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook" title="Facebook">Facebook</a>
+                <a href="#" aria-label="Twitter" title="Twitter">Twitter</a>
+                <a href="#" aria-label="Instagram" title="Instagram">Instagram</a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const products = [
+{ id: 1, name: "T-Shirt", price: "₹499",image: "images/tshirt1.jpeg", rating: 5  },
+{ id: 2, name: "Latth", price: "₹999", image: "images/pepsu-lathh.jpeg", rating: 5 },
+{ id: 3, name: "Cap", price: "₹299", image: "images/PEPSU-CAP.jpg", rating: 3 },
+{ id: 4, name: "Mug", price: "₹199", image: "https://www.shutterstock.com/image-photo/old-authentic-wooden-mug-isolated-600nw-1732812440.jpg", rating: 4 },
+        { id: 5, name: "PEPSU BAHI T SHIRT", price: "₹299", image: "images/PEPSU-TSHIRT-1.jpeg", rating: 5, tag: "Fell Like Real Pepsuians" },
+        { id: 6, name: "Pepsu Bhai Ka Ooth", price: "₹1500", image: "images/pepsu-camel.png", rating: 4 }
+    ];
+
+const whatsappGroupLink = "https://chat.whatsapp.com/H6PZWiWHNfd1hyP4E1UgTp";
+
+        function createStarRating(rating) {
+            let stars = "";
+            for (let i = 1; i <= 5; i++) {
+                stars += i <= rating ? "★" : "☆";
+            }
+            return stars;
+        }
+
+        function createProductElement(product) {
+            const productDiv = document.createElement("div");
+            productDiv.className = "product";
+
+            const img = document.createElement("img");
+            img.src = product.image;
+            img.alt = product.name;
+
+            const name = document.createElement("div");
+            name.className = "product-name";
+            name.textContent = product.name;
+
+            const price = document.createElement("div");
+            price.className = "product-price";
+            price.textContent = product.price;
+
+            const rating = document.createElement("div");
+            rating.className = "product-rating";
+            rating.textContent = createStarRating(product.rating);
+            rating.setAttribute("aria-label", `Rating: ${product.rating} out of 5 stars`);
+
+        const buyButton = document.createElement("button");
+        buyButton.className = "buy-button";
+        buyButton.textContent = "Buy";
+        buyButton.onclick = () => {
+            const userName = prompt("Please enter your name:");
+            if (userName && userName.trim() !== "") {
+                const message = encodeURIComponent(`Hello, my name is ${userName}. I want to buy the product: ${product.name}.`);
+                window.location.href = `${whatsappGroupLink}?text=${message}`;
+            } else {
+                alert("Name is required to proceed.");
+            }
+        };
+
+        const detailsButton = document.createElement("button");
+        detailsButton.className = "buy-button";
+        detailsButton.textContent = "Details";
+        detailsButton.style.marginTop = "10px";
+        detailsButton.onclick = () => {
+            alert(`More details about ${product.name} will be available soon.`);
+        };
+
+        productDiv.appendChild(img);
+        productDiv.appendChild(name);
+        if (product.tag) {
+            const tag = document.createElement("div");
+            tag.className = "product-tag";
+            tag.textContent = product.tag;
+            tag.style.fontSize = "0.9em";
+            tag.style.color = "#25D366";
+            tag.style.marginBottom = "10px";
+            productDiv.appendChild(tag);
+        }
+        productDiv.appendChild(price);
+        productDiv.appendChild(rating);
+        productDiv.appendChild(buyButton);
+        productDiv.appendChild(detailsButton);
+
+            return productDiv;
+        }
+
+        function loadProducts() {
+            const productList = document.getElementById("productList");
+            productList.innerHTML = "";
+            products.forEach(product => {
+                const productElement = createProductElement(product);
+                productList.appendChild(productElement);
+            });
+        }
+
+        function scrollToSection(id) {
+            const section = document.getElementById(id);
+            if (section) {
+                section.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+
+        loadProducts();
+    </script>
+</body>
+</html>
